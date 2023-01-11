@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="output"></div>
+    <form id="myForm">
+        <input type="text" id="search" />
+        <input type="submit" />
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // $.ajax({
+        //     type: 'GET',
+        //     url: 'https://jsonplaceholder.typicode.com/users',
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         //Sorting
+        //         let array = [];
+        //         for (let i = 0; i < response.length; i++) {
+        //             array.push(response[i].name);
+        //         }
+        //         console.log(array.sort());
+        //     },
+        // });
+
+        $('#myForm').submit(function(e) {
+            e.preventDefault();
+            let value = $('#search').val();
+            $.ajax({
+                type: 'GET',
+                url: 'https://jsonplaceholder.typicode.com/users',
+                dataType: 'JSON',
+                success: function(response) {
+                    let array = [];
+                    for (let i = 0; i < response.length; i++) {
+                        array.push(response[i].name);
+                    }
+                    // const words = [
+                    //     'spray',
+                    //     'limit',
+                    //     'elite',
+                    //     'exuberant',
+                    //     'destruction',
+                    //     'present',
+                    // ];
+
+                    const result = response.filter((word) => word.username === value);
+                    if (result.length > 0) {
+                        console.log('We found it');
+                    } else {
+                        console.log('Invalid');
+                    }
+
+                    // let inArray = array.indexOf('Patricia Lebsack');
+                    // console.log(array);
+                },
+            });
+        });
+    </script>
+</body>
+
+</html>
